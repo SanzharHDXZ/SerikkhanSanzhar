@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanzhar</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #ffffff;
+      color: #2d2d2d;
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: "DM Serif Display", serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #2d2d2d;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #e63946;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #e63946, #1d3557);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+
+    .hero {
+      position: relative;
+      width: 100%;
+      margin-top: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #f0f0f0;
+      height: 100vh;
+      max-height: 800px;
+    }
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top center;
+      z-index: 1;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(29, 53, 87, 0.25), rgba(230, 57, 70, 0.2));
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 10%;
+      left: 0;
+      right: 0;
+      z-index: 3;
+      text-align: center;
+      color: white;
+      animation: heroFadeIn 0.8s ease forwards;
+    }
+
+    @keyframes heroFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-family: "DM Serif Display", serif;
+      font-size: 3.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .hero p {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      letter-spacing: 0.5px;
+    }
+
+
+    main {
+      position: relative;
+    }
+
+    section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    section:nth-child(1) { animation-delay: 0.2s; }
+    section:nth-child(2) { animation-delay: 0.4s; }
+    section:nth-child(3) { animation-delay: 0.6s; }
+    section:nth-child(4) { animation-delay: 0.8s; }
+
+
+    h2 {
+      font-family: "DM Serif Display", serif;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      color: #1a1a1a;
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #e63946, #1d3557);
+      border-radius: 2px;
+    }
+
+
+    #about {
+      text-align: left;
+    }
+
+    .about-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    .about-photo {
+      width: 100%;
+      max-width: 320px;
+      height: 400px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      justify-self: center;
+    }
+
+    .about-photo:hover {
+      transform: scale(1.03);
+      box-shadow: 0 15px 50px rgba(230, 57, 70, 0.2);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .about-photo:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #555;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-text p {
+      margin: 0;
+    }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #555;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .about-text p {
+      margin: 0;
+    }
+
+
+    .hobbies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .hobby-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .hobby-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 50px rgba(29, 53, 87, 0.15);
+    }
+
+    .hobby-image {
+      width: 100%;
+      height: 280px;
+      background: #f0f0f0;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hobby-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .hobby-card:hover .hobby-image img {
+      transform: scale(1.05);
+    }
+
+    .hobby-card h3 {
+      font-family: "Rajdhani", sans-serif;
+      font-size: 1.3rem;
+      padding: 1.5rem;
+      text-align: center;
+      background: #f8f8f8;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 50px rgba(230, 57, 70, 0.15);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 400px;
+      background: #f0f0f0;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .gallery-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-image img {
+      transform: scale(1.05);
+    }
+
+    .gallery-caption {
+      padding: 1.5rem;
+      background: #f8f8f8;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #555;
+    }
+
+
+    .carousel-container {
+      position: relative;
+      margin-top: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .certificate-image {
+      width: 100%;
+      height: 400px;
+      background: #f9f9f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 12px 12px 0 0;
+      padding: 8px;
+    }
+
+    .certificate-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .carousel-slide:hover .certificate-image img {
+      transform: scale(1.03);
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(26, 26, 26, 0.7);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .carousel-button:hover {
+      background: #e63946;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-button.prev {
+      left: 20px;
+    }
+
+    .carousel-button.next {
+      right: 20px;
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 1.5rem;
+      background: #f8f8f8;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #d0d0d0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .dot.active {
+      background: #e63946;
+      transform: scale(1.3);
+    }
+
+    .dot:hover {
+      background: #1d3557;
+    }
+
+    .carousel-description {
+      padding: 1.5rem;
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      text-align: center;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background: #1a1a1a;
+      color: #ffffff;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(230, 57, 70, 0.1);
+      color: #e63946;
+      text-decoration: none;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .social-link:hover {
+      background: #e63946;
+      color: white;
+      transform: translateY(-5px);
+      border-color: white;
+    }
+
+    .footer-text {
+      font-size: 0.9rem;
+      color: #aaa;
+      margin-top: 1rem;
+    }
+
+    .footer-text p {
+      margin: 0.3rem 0;
+    }
+
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1rem;
+        font-size: 0.85rem;
+      }
+
+      section {
+        padding: 2.5rem 1.5rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+      }
+
+      .about-photo {
+        width: 200px;
+        height: 280px;
+      }
+
+      .hobbies-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero {
+        height: 450px;
+        margin-top: 140px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .carousel-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+
+      .carousel-button.prev {
+        left: 10px;
+      }
+
+      .carousel-button.next {
+        right: 10px;
+      }
+
+      .certificate-image {
+        height: 300px;
+      }
+
+      .social-links {
+        gap: 1.5rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .about-photo {
+        max-width: 280px;
+        justify-self: center;
+      }
+
+      .about-text {
+        text-align: left;
+      }
+    }
+
+ 
+    .accent-red {
+      color: #e63946;
+    }
+
+    .accent-blue {
+      color: #1d3557;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Serikkhan Sanzhar</div>
+    <ul>
+      <li><a href="#about">About Me</a></li>
+      <li><a href="#hobbies">Hobbies</a></li>
+      <li><a href="#mylife">My Life</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+    </ul>
+  </nav>
+
+
+  <section class="hero">
+
+    <img src="main.png" alt="Hero Image">
+    <div class="hero-content">
+      <h1>Sanzhar</h1>
+      <p>University candidate</p>
+    </div>
+  </section>
+
+
+  <main>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-container">
+        <div class="about-photo">
+    
+          <img src="infomatrix.jpg" alt="About Me Photo">
+        </div>
+        <div class="about-text">
+          <p>Hello! I'm Sanzhar</span>,- an IT developer and chess player from Astana, Kazakhstan. I designed this webdsite to help you discover who I am, not only through my academic side but also through my life experiences. By the way, photo on the left was taken during Infomatrix 2025. </p>
+        </div>
+      </div>
+    </section>
+
+    
+    <section id="hobbies">
+      <h2>Hobbies</h2>
+      <div class="hobbies-grid">
+        <div class="hobby-card">
+          <div class="hobby-image">
+ 
+            <img src="coding.jpeg" alt="Coding Hobby">
+          </div>
+          <h3>Coding</h3>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-image">
+
+            <img src="chess.jpg" alt="Chess Hobby">
+          </div>
+          <h3>Chess</h3>
+        </div>
+        <div class="hobby-card">
+          <div class="hobby-image">
+
+            <img src="cycling.JPEG" alt="Cycling Hobby">
+          </div>
+          <h3>Cycling</h3>
+        </div>
+      </div>
+    </section>
+
+   
+    <section id="mylife">
+      <h2>Life moments</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <div class="gallery-image">
+
+            <img src="board.png" alt="My Life Photo 1">
+          </div>
+          <div class="gallery-caption">
+            <strong>   My favourite chessboard</strong> was signed by Grandmaster Dinara Sadvakasova in 2019. For me, it's not just a board- it's a symbol of the moment I began my conscious chess journey.
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+  
+            <img src="riviera.png" alt="My Life Photo 2">
+          </div>
+          <div class="gallery-caption">
+            <strong>Waiting for scholarship decision</strong> from the school I am currently studying at. I wanted to get in so much that I took a photo near the school during 20 days!
+          </div>
+        </div>
+        <div class="gallery-item">
+          <div class="gallery-image">
+          
+            <img src="chill.png" alt="My Life Photo 3">
+          </div>
+          <div class="gallery-caption">
+            <strong>With my cousin</strong> at a chess tournament in Almaty. Relaxing after an intense game for first place.
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="certificates">
+      <h2>Certificates</h2>
+      <div class="carousel-container">
+        <div class="carousel">
+          <div class="carousel-track" id="carouselTrack">
+            <div class="carousel-slide">
+              <div class="certificate-image">
+            
+                <img src="Infomatrix3place.jpeg" alt="Certificate 1">
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="certificate-image">
+        
+                <img src="RKNPrep1place.pdf.png" alt="Certificate 2">
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="certificate-image">
+         
+                <img src="aihackathon.jpg" alt="Certificate 3">
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="certificate-image">
+              
+                <img src="Fibonacci_Волонтерство.pdf.png" alt="Certificate 4">
+              </div>
+            </div>
+            <div class="carousel-slide">
+              <div class="certificate-image">
+           
+                <img src="Proggy-Buggycert.pdf.png" alt="Certificate 5">
+              </div>
+            </div>
+          </div>
+          <button class="carousel-button prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+          <button class="carousel-button next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="carousel-dots" id="dotsContainer"></div>
+        <div class="carousel-description">
+          <p>A part of my achievements from 10th grade. Click the arrows to explore more certificates.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <footer>
+    <div class="social-links">
+      <a href="https://github.com/SanzharHDXZ" class="social-link" title="GitHub" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="mailto:sanzharerlanovich@gmail.com" class="social-link" title="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+    <div class="footer-text">
+      <p>Website is designed for desktop viewing</p>
+    </div>
+  </footer>
+
+  <script>
+
+    const carouselTrack = document.getElementById('carouselTrack');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('dotsContainer');
+
+    let currentIndex = 0;
+    const slideCount = slides.length;
+
+
+    for (let i = 0; i < slideCount; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+
+    const dots = document.querySelectorAll('.dot');
+
+    function updateCarousel() {
+      const offset = -currentIndex * 100;
+      carouselTrack.style.transform = `translateX(${offset}%)`;
+      
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % slideCount;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+      updateCarousel();
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateCarousel();
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animation = 'fadeIn 0.8s ease forwards';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.12)';
+      } else {
+        nav.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.08)';
+      }
+    });
+  </script>
+</body>
+</html>
